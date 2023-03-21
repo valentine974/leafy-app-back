@@ -17,12 +17,12 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 const saltRounds = 10;
 
 // POST /auth/signup  - Creates a new user in the database
-router.post("/signup", (req, res, next) => {
-  const { email, password, name } = req.body;
+router.post("/create", (req, res, next) => { // ADD THE MIDDLE WARE and verif for creating profile only for HRs
+  const { email, password, name, surname, contractStartDate, validators, isNewEmployee, position } = req.body;
 
   // Check if email or password or name are provided as empty strings
-  if (email === "" || password === "" || name === "") {
-    res.status(400).json({ message: "Provide email, password and name" });
+  if (email === "" || password === "" || name === "" || surname === "" || contractStartDate === "" ) {
+    res.status(400).json({ message: "Provide email, password, name and surname" });
     return;
   }
 
@@ -58,7 +58,7 @@ router.post("/signup", (req, res, next) => {
 
       // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then`
-      return User.create({ email, password: hashedPassword, name });
+      return User.create({ email, password: hashedPassword, name, surname, contractStartDate, isNewEmployee, position   });
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password
@@ -83,6 +83,7 @@ router.post("/login", (req, res, next) => {
     res.status(400).json({ message: "Provide email and password." });
     return;
   }
+  
 
   // Check the users collection if a user with the same email exists
   User.findOne({ email })
@@ -96,7 +97,7 @@ router.post("/login", (req, res, next) => {
       // Compare the provided password with the one saved in the database
       const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
 
-      if (passwordCorrect) {
+      if (passwordCorrect ) {
         // Deconstruct the user object to omit the password
         const { _id, email, name } = foundUser;
 

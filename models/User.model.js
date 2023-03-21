@@ -35,7 +35,7 @@ const userSchema = new Schema(
       type: String,
       required:[true, "Position is required."],
     },
-    isNew: {
+    isNewEmployee: {
       type: Boolean , 
       required:[true, "Choice is required."],
     },
