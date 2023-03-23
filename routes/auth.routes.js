@@ -17,8 +17,8 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 const saltRounds = 10;
 
 // POST /auth/signup  - Creates a new user in the database
-router.post("/create", (req, res, next) => { // ADD THE MIDDLE WARE and verif for creating profile only for HRs
-  const { email, password, name, surname, contractStartDate, validators, isNewEmployee, position } = req.body;
+router.post("/create-user", (req, res, next) => { // ADD THE MIDDLE WARE and verif for creating profile only for HRs
+  const { email, password, name, surname, contractStartDate, validators, isNewEmployee, position, companyId } = req.body;
 
   // Check if email or password or name are provided as empty strings
   if (email === "" || password === "" || name === "" || surname === "" || contractStartDate === "" ) {
@@ -58,7 +58,7 @@ router.post("/create", (req, res, next) => { // ADD THE MIDDLE WARE and verif fo
 
       // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then`
-      return User.create({ email, password: hashedPassword, name, surname, contractStartDate, isNewEmployee, position   });
+      return User.create({ email, password: hashedPassword, name, surname, contractStartDate, isNewEmployee: true, position, companyId  });
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password

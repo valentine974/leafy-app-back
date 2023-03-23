@@ -11,6 +11,7 @@ const companySchema = new Schema(
     },
     siret: {
       type: String, 
+      unique:true,
     },
     
   },

@@ -9,7 +9,7 @@ const userSchema = new Schema(
       unique: true,
       lowercase: true,
       trim: true,
-      match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address'],
+      match: [/^\S+@\S+\.\S+$/, "Please use a valid email address"],
     },
     password: {
       type: String,
@@ -23,32 +23,34 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Surname is required."],
     },
-    companyId: {type : Schema.Types.ObjectId,ref:'Company' },
-    validators: [{type : Schema.Types.ObjectId,ref:'User' }],
+    companyId: {
+      type: Schema.Types.ObjectId,
+      ref: "Company",
+      required: [true, "Company is required"],
+    },
+    validators: [{ type: Schema.Types.ObjectId, ref: "User" }],
     vacationCounter1: {
-      type: Number
+      type: Number,
     },
     vacationCounter2: {
-      type: Number
+      type: Number,
     },
     position: {
       type: String,
-      required:[true, "Position is required."],
+      required: [true, "Position is required."],
     },
     isNewEmployee: {
-      type: Boolean , 
-      required:[true, "Choice is required."],
+      type: Boolean,
     },
     contractStartDate: {
-      type: Date ,
-      required:[true, "Employee's Start Date is required."],
-    }
+      type: Date,
+      required: [true, "Employee's Start Date is required."],
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );
- 
 
-module.exports =model("User", userSchema);
+module.exports = model("User", userSchema);
