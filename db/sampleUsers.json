@@ -1,0 +1,19 @@
+{
+   "users": [{
+    "name": "John",
+    "surname": "Doe",
+    "email": "john.doe@leafy.fr",
+    "password":"Azerty1",
+    "isNewEmployee": "true",
+    "contractStartDate":"12-01-2022",
+    "position":"manager"
+    },
+    {"name": "Tom",
+    "surname": "White",
+    "email": "tom.white@leafy.fr",
+    "password":"Azerty1",
+    "isNewEmployee": "true",
+    "contractStartDate":"12-01-2022",
+    "position":"manager"
+}]
+}
