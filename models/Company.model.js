@@ -13,7 +13,9 @@ const companySchema = new Schema(
       type: String, 
       unique:true,
     },
-    
+    numberOfVacationDays:{
+      type: Number
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

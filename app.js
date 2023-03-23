@@ -25,8 +25,8 @@ app.use("/auth", authRoutes);
 const companyRoutes = require("./routes/company.routes");
 app.use("/api", companyRoutes); 
 
-app.use("/api", require("./routes/requests.routes"));
-
+app.use("/api", require("./routes/request.routes"));
+app.use("/api", require("./routes/user.routes"));
 
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
