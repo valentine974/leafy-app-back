@@ -9,6 +9,7 @@ router.get("/users", (req,res,next)=>{
 })
 router.get("/users/:id", (req,res,next)=>{
   User.findById(req.params.id)
+  .populate("companyId")
   .then(user=> res.json(user))
   .catch(err=>console.log("err in retrieving the user", err))
 })
