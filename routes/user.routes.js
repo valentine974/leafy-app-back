@@ -25,8 +25,8 @@ router.post("/upload", fileUploader.single("profilePictureUrl"), (req, res, next
     next(new Error("No file uploaded!"));
     return;
   }
-  console.log({ secure_url: req.file.path })
-  res.json({ secure_url: req.file.path });
+  // console.log({ secure_url: req.file.path })
+  res.json({ profile_picture_url: req.file.path });
 })
 
 //update user profile info
