@@ -4,7 +4,7 @@ const Company = require("../models/Company.model")
 
 
 router.post("/create-company", (req,res,next)=>{
-    const {name, address, siret,numberOfVacationDays} = req.body
+    const {name, address, siret,numberOfVacationDays, imageUrl} = req.body
 
     Company.findOne({ siret })
     .then((foundCompany) => {
@@ -13,7 +13,7 @@ router.post("/create-company", (req,res,next)=>{
         res.status(400).json({ message: "Company already exists." });
         return;
       }
-      return Company.create({ name, address, siret,numberOfVacationDays })
+      return Company.create({ name, address, siret,numberOfVacationDays, imageUrl })
       .then(()=>res.json("new company created"));
     })
     .catch(err=>console.log("err in creating company", err))

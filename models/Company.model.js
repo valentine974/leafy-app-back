@@ -15,6 +15,9 @@ const companySchema = new Schema(
     },
     numberOfVacationDays:{
       type: Number
+    },
+    imageUrl:{
+      type: String
     }
   },
   {
