@@ -4,6 +4,7 @@ const User = require("../models/User.model")
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
+const fileUploader = require("../config/cloudinary.config");
 
 router.get("/users", (req,res,next)=>{
     User.find()
@@ -17,9 +18,21 @@ router.get("/users/:id", (req,res,next)=>{
   .catch(err=>console.log("err in retrieving the user", err))
 })
 
+
+//update user profile picture
+router.post("/upload", fileUploader.single("profilePictureUrl"), (req, res, next) => {
+  if(!req.file) {
+    next(new Error("No file uploaded!"));
+    return;
+  }
+  // console.log({ secure_url: req.file.path })
+  res.json({ profile_picture_url: req.file.path });
+})
+
+//update user profile info
 router.put("/users/:id", (req, res, next)=>{
-    const {email, name, surname, contractStartDate, position, companyId, validators} = req.body
-    User.findByIdAndUpdate(req.params.id,{email, name, surname, contractStartDate, position, companyId, validators}, {new:true})
+    const {email, name, surname, contractStartDate, position, companyId, validators, profilePictureUrl} = req.body
+    User.findByIdAndUpdate(req.params.id,{email, name, surname, contractStartDate, position, companyId, validators, profilePictureUrl}, {new:true})
     .then(user=>res.json(user))
     .catch(err=>console.log("err in updating user", err))
 })

@@ -19,7 +19,6 @@ const saltRounds = 10;
 router.post("/create-user", (req, res, next) => { // ADD THE MIDDLE WARE and verif for creating profile only for HRs
   const { email, password, name, surname, contractStartDate, validators, isNewEmployee, position, companyId } = req.body;
 
-  // Check if email or password or name are provided as empty strings
   if (email === "" || password === "" || name === "" || surname === "" || contractStartDate === "" ) {
     res.status(400).json({ message: "Provide email, password, name and surname" });
     return;
