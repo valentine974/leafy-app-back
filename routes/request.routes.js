@@ -6,17 +6,20 @@ const mongoose = require("mongoose");
 const User = require("../models/User.model");
 const Request = require("../models/Request.model");
 
-router.post("/users/:id/create-request", (req, res, next) => {
+router.post("/user/create-request", (req, res, next) => {
   const {
+    status,
+    approvalLimitDate,
     isFullDay,
     startDate,
     morningAfternoonStart,
     endDate,
     morningAfternoonEnd,
+    requester,
     comments,
   } = req.body;
 
-  User.findById(req.params.id)
+  User.findById(requester)
     .populate("companyId")
     .then((foundUser) => {
       const { validators } = foundUser;
@@ -27,6 +30,8 @@ router.post("/users/:id/create-request", (req, res, next) => {
       // add if condition daysleft > demanded days
       if (true) {
         Request.create({
+          status,
+          approvalLimitDate,
           isFullDay,
           startDate,
           morningAfternoonStart,
@@ -34,6 +39,7 @@ router.post("/users/:id/create-request", (req, res, next) => {
           morningAfternoonEnd,
           comments,
           validations,
+          requester,
         });
       }
     })
