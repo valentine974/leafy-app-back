@@ -19,8 +19,7 @@ router.get("/users/:id", (req,res,next)=>{
   .catch(err=>console.log("err in retrieving the user", err))
 })
 
-
-//update user profile picture
+//update picture
 router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
   if(!req.file) {
     next(new Error("No file uploaded!"));
@@ -30,10 +29,11 @@ router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
   res.json({ image_url: req.file.path });
 })
 
+
 //update user profile info
 router.put("/users/:id", (req, res, next)=>{
-    const {email, name, surname, contractStartDate, position, companyId, validators, profilePictureUrl} = req.body
-    User.findByIdAndUpdate(req.params.id,{email, name, surname, contractStartDate, position, companyId, validators, profilePictureUrl}, {new:true})
+    const {email, name, surname, contractStartDate, position, companyId, validators, imageUrl} = req.body
+    User.findByIdAndUpdate(req.params.id,{email, name, surname, contractStartDate, position, companyId, validators, imageUrl}, {new:true})
     .then(user=>res.json(user))
     .catch(err=>console.log("err in updating user", err))
 })

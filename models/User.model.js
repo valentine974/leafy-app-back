@@ -11,7 +11,7 @@ const userSchema = new Schema(
       trim: true,
       match: [/^\S+@\S+\.\S+$/, "Please use a valid email address"],
     },
-    profilePictureUrl: {
+    imageUrl: {
       type: String,
     },
     password: {
