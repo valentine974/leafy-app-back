@@ -8,6 +8,7 @@ const fileUploader = require("../config/cloudinary.config");
 
 router.get("/users", (req,res,next)=>{
     User.find()
+    .populate("companyId")
     .then(users=> res.json(users))
     .catch(err=>console.log("err in retrieving users", err))
 })

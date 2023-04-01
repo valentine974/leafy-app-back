@@ -23,9 +23,9 @@ router.post("/user/create-request", (req, res, next) => {
     .populate("companyId")
     .then((foundUser) => {
       const { validators } = foundUser;
+      console.log(validators)
       let validations = []
       validators.map((validator) => validations.push({validatorId: validator, approved:false}));
-      console.log(validations)
       const daysLeft = foundUser.companyId.numberOfVacationDays; //to be refined with vacation day calculation
       // add if condition daysleft > demanded days
       if (true) {
