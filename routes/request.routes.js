@@ -40,9 +40,12 @@ router.post("/user/create-request", (req, res, next) => {
           comments,
           validations,
           requester,
-        });
+        })
+        .then((request)=> res.json(request))
+        .catch((err)=>('err in sending the request', err))
+
       }
-    })
+    }) 
     .catch((err) => console.log("error in payload._id", err));
 });
 
@@ -59,7 +62,7 @@ router.get("/requests/:id", (req,res,next)=>{
     .catch(err=>console.log("err in retrieving the Request", err))
   })
   
-router.put("/requests/:id", (req, res, next)=>{
+router.put("/requests/:id/settings", (req, res, next)=>{
       const {
         isFullDay,
         startDate,
