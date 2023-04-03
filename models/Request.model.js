@@ -27,7 +27,7 @@ const requestSchema = new Schema(
     validations: [
         {
         validatorId: {type : Schema.Types.ObjectId,ref:'User' },
-        approved: Boolean,
+        approval: String,
     }
     ],
     conversationId: {type : Schema.Types.ObjectId,ref:'Conversation' },

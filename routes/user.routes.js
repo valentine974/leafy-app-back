@@ -19,15 +19,7 @@ router.get("/users/:id", (req,res,next)=>{
   .catch(err=>console.log("err in retrieving the user", err))
 })
 
-//update picture
-router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
-  if(!req.file) {
-    next(new Error("No file uploaded!"));
-    return;
-  }
-  // console.log({ secure_url: req.file.path })
-  res.json({ image_url: req.file.path });
-})
+
 
 
 //update user profile info

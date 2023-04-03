@@ -25,7 +25,7 @@ router.post("/user/create-request", (req, res, next) => {
       const { validators } = foundUser;
       console.log(validators)
       let validations = []
-      validators.map((validator) => validations.push({validatorId: validator, approved:false}));
+      validators.map((validator) => validations.push({validatorId: validator, approval:"pending"}));
       const daysLeft = foundUser.companyId.numberOfVacationDays; //to be refined with vacation day calculation
       // add if condition daysleft > demanded days
       if (true) {
@@ -56,13 +56,13 @@ router.get("/requests", (req,res,next)=>{
     .catch(err=>console.log("err in retrieving the Request", err))
   })
 
-router.get("/requests/:id", (req,res,next)=>{
+router.get("/request/:id", (req,res,next)=>{
     Request.findById(req.params.id)
     .then(request=> res.json(request))
     .catch(err=>console.log("err in retrieving the Request", err))
   })
   
-router.put("/requests/:id/settings", (req, res, next)=>{
+router.put("/request/:id/settings", (req, res, next)=>{
       const {
         isFullDay,
         startDate,
@@ -72,10 +72,16 @@ router.put("/requests/:id/settings", (req, res, next)=>{
         comments,
         validations,
       } = req.body;
+      let status = "pending"
+      console.log("validations:",validations)
+      if(validations && validations.every((validation) => validation.approval === "approved")) status = "approved"
+      if(validations && validations.some((validation) => validation.approval === "rejected")) status = "rejected"
+
       Request.findByIdAndUpdate(
         req.params.id,
         {
           isFullDay,
+          status,
           startDate,
           morningAfternoonStart,
           endDate,
@@ -89,7 +95,7 @@ router.put("/requests/:id/settings", (req, res, next)=>{
         .catch((err) => console.log("err in updating Request", err));
   })
   
-  router.delete("/requests/:id", (req, res, next)=>{
+  router.delete("/request/:id", (req, res, next)=>{
       Request.findByIdAndRemove(req.params.id)
       .then(()=>res.json("Request deleted"))
       .catch(err=>console.log("err in deleting Request", err))
