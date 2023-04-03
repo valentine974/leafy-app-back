@@ -9,7 +9,6 @@ const jwt = require("jsonwebtoken");
 
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
-
 // Require necessary (isAuthenticated) middleware in order to control access to specific routes
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 
@@ -17,12 +16,11 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 const saltRounds = 10;
 
 // POST /auth/signup  - Creates a new user in the database
-router.post("/signup", (req, res, next) => {
-  const { email, password, name } = req.body;
+router.post("/create-user", (req, res, next) => { // ADD THE MIDDLE WARE and verif for creating profile only for HRs
+  const { email, password, name, surname, contractStartDate, validators, isNewEmployee, position, companyId } = req.body;
 
-  // Check if email or password or name are provided as empty strings
-  if (email === "" || password === "" || name === "") {
-    res.status(400).json({ message: "Provide email, password and name" });
+  if (email === "" || password === "" || name === "" || surname === "" || contractStartDate === "" || position === "" || companyId === "" ) {
+    res.status(400).json({ message: "Provide email, password, position, companyId, name and surname" });
     return;
   }
 
@@ -58,15 +56,15 @@ router.post("/signup", (req, res, next) => {
 
       // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then`
-      return User.create({ email, password: hashedPassword, name });
+      return User.create({ email, password: hashedPassword, name, surname, contractStartDate, isNewEmployee: true, position, companyId  });
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password
       // We should never expose passwords publicly
-      const { email, name, _id } = createdUser;
+      const { email, name, _id, isNewEmployee, companyId,position, imageUrl } = createdUser;
 
       // Create a new object that doesn't expose the password
-      const user = { email, name, _id };
+      const user = { email, name, _id, isNewEmployee, companyId, position, imageUrl };
 
       // Send a json response containing the user object
       res.status(201).json({ user: user });
@@ -83,6 +81,7 @@ router.post("/login", (req, res, next) => {
     res.status(400).json({ message: "Provide email and password." });
     return;
   }
+  
 
   // Check the users collection if a user with the same email exists
   User.findOne({ email })
@@ -96,12 +95,12 @@ router.post("/login", (req, res, next) => {
       // Compare the provided password with the one saved in the database
       const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
 
-      if (passwordCorrect) {
+      if (passwordCorrect ) {
         // Deconstruct the user object to omit the password
-        const { _id, email, name } = foundUser;
+        const { _id, email, name, isNewEmployee, companyId, position,imageUrl} = foundUser;
 
         // Create an object that will be set as the token payload
-        const payload = { _id, email, name };
+        const payload = { _id, email, name, isNewEmployee, companyId,imageUrl, position}; 
 
         // Create a JSON Web Token and sign it
         const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
@@ -127,5 +126,7 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
   // Send back the token payload object containing the user data
   res.status(200).json(req.payload);
 });
+
+
 
 module.exports = router;

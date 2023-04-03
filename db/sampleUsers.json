@@ -1,0 +1,37 @@
+{
+   "users": [{
+    "name": "John",
+    "surname": "Doe",
+    "email": "john.doe@leafy.fr",
+    "password":"Azerty1",
+    "contractStartDate":"12-01-2022",
+    "position":"manager",
+    "companyId":"641c975e2932911fad1b52c5"
+    },
+    {"name": "Tom",
+    "surname": "White",
+    "email": "tom.white@leafy.fr",
+    "password":"Azerty1",
+    "contractStartDate":"12-01-2022",
+    "position":"manager",
+    "companyId":"641c975e2932911fad1b52c5"
+}],
+    "request":{{
+        "status": "initiated",
+        "isFullDay": "true",
+        "startDate": "2023-01-01",
+        "morningAfternoonStart": "morning",
+        "endDate": "2023-01-04", 
+        "morningAfternoonEnd": "afternon",
+        "requester": "641c8451673a6df695b0f498",
+        "validations": [
+            {
+            "validatorId": "641c8451673a6df695b0f498",
+            "approved": "true"
+        }
+        ],
+        "conversationId": "",
+        "comments": "some comments",
+        "approvalLimitDate": "2022-12-05"
+      }}
+}

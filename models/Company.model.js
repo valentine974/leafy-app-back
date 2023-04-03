@@ -11,8 +11,14 @@ const companySchema = new Schema(
     },
     siret: {
       type: String, 
+      unique:true,
     },
-    
+    numberOfVacationDays:{
+      type: Number
+    },
+    imageUrl:{
+      type: String
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

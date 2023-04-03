@@ -24,10 +24,18 @@ const requestSchema = new Schema(
       type: String, 
     },
     requester: {type : Schema.Types.ObjectId,ref:'User' },
-    validators: [{type : Schema.Types.ObjectId,ref:'User' }],
+    validations: [
+        {
+        validatorId: {type : Schema.Types.ObjectId,ref:'User' },
+        approval: String,
+    }
+    ],
     conversationId: {type : Schema.Types.ObjectId,ref:'Conversation' },
     comments: {
       type: String,  
+    },
+    approvalLimitDate: {
+      type: Date, 
     },
     
   },
