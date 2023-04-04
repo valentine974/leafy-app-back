@@ -21,6 +21,7 @@ router.post("/user/create-request", (req, res, next) => {
 
   User.findById(requester)
     .populate("companyId")
+    .populate("requester")
     .then((foundUser) => {
       const { validators } = foundUser;
       console.log(validators)
@@ -52,12 +53,14 @@ router.post("/user/create-request", (req, res, next) => {
 
 router.get("/requests", (req,res,next)=>{
     Request.find()
+    .populate("requester")
     .then(requests=> res.json(requests))
     .catch(err=>console.log("err in retrieving the Request", err))
   })
 
 router.get("/request/:id", (req,res,next)=>{
     Request.findById(req.params.id)
+    .populate("requester")
     .then(request=> res.json(request))
     .catch(err=>console.log("err in retrieving the Request", err))
   })
@@ -95,6 +98,7 @@ router.put("/request/:id/settings", (req, res, next)=>{
         { new: true }
       )
         .then((request) => {
+          console.log(request)
           res.json(request)})
         .catch((err) => console.log("err in updating Request", err));
   })
