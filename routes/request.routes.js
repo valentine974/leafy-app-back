@@ -73,10 +73,13 @@ router.put("/request/:id/settings", (req, res, next)=>{
         validations,
       } = req.body;
       let status = "pending"
-      console.log("validations:",validations)
-      if(validations && validations.every((validation) => validation.approval === "approved")) status = "approved"
-      if(validations && validations.some((validation) => validation.approval === "rejected")) status = "rejected"
+/*       console.log("validations:",validations) */
+      /* status is now treated on the fron end */
+      if(validations && validations.every((validation) => validation.status === "approved")) status = "approved"
+      if(validations && validations.some((validation) => validation.status === "rejected")) status = "rejected"
 
+      /* console.log("isFullDay", isFullDay, "startDate", startDate, "morningAfternoonStart", morningAfternoonStart, "endDate", endDate, "morningAfternoonEnd", morningAfternoonEnd, "comments", comments, "validations", validations, "status", status)
+       */
       Request.findByIdAndUpdate(
         req.params.id,
         {
@@ -91,7 +94,8 @@ router.put("/request/:id/settings", (req, res, next)=>{
         },
         { new: true }
       )
-        .then((request) => res.json(request))
+        .then((request) => {
+          res.json(request)})
         .catch((err) => console.log("err in updating Request", err));
   })
   

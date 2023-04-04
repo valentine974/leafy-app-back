@@ -12,7 +12,7 @@ router.get("/users", (req,res,next)=>{
     .then(users=> res.json(users))
     .catch(err=>console.log("err in retrieving users", err))
 })
-router.get("/users/:id", (req,res,next)=>{
+router.get("/user/:id", (req,res,next)=>{
   User.findById(req.params.id)
   .populate("companyId")
   .then(user=> res.json(user))
@@ -23,7 +23,7 @@ router.get("/users/:id", (req,res,next)=>{
 
 
 //update user profile info
-router.put("/users/:id", (req, res, next)=>{
+router.put("/user/:id/settings", (req, res, next)=>{
     const {email, name, surname, contractStartDate, position, companyId, validators, imageUrl} = req.body
     User.findByIdAndUpdate(req.params.id,{email, name, surname, contractStartDate, position, companyId, validators, imageUrl}, {new:true})
     .then(user=>res.json(user))
@@ -31,7 +31,7 @@ router.put("/users/:id", (req, res, next)=>{
 })
 
 
-router.put("/users/:id/modify-password", (req,res,next)=>{
+router.put("/user/:id/modify-password", (req,res,next)=>{
     const {password} = req.body
    
     if (password === "" ) {
@@ -64,7 +64,7 @@ router.put("/users/:id/modify-password", (req,res,next)=>{
 
 
 
-router.delete("/users/:id", (req, res, next)=>{
+router.delete("/user/:id", (req, res, next)=>{
     User.findByIdAndRemove(req.params.id)
     .then(()=>res.json("user deleted"))
     .catch(err=>console.log("err in deleting user", err))
