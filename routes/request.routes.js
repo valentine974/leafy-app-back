@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
 const mongoose = require("mongoose");
-
 const User = require("../models/User.model");
 const Request = require("../models/Request.model");
 
@@ -49,15 +47,16 @@ router.post("/user/create-request", (req, res, next) => {
     .catch((err) => console.log("error in payload._id", err));
 });
 
-
 router.get("/requests", (req,res,next)=>{
     Request.find()
+    .populate("requester")
     .then(requests=> res.json(requests))
     .catch(err=>console.log("err in retrieving the Request", err))
   })
 
 router.get("/request/:id", (req,res,next)=>{
     Request.findById(req.params.id)
+    .populate("requester")
     .then(request=> res.json(request))
     .catch(err=>console.log("err in retrieving the Request", err))
   })
@@ -95,6 +94,7 @@ router.put("/request/:id/settings", (req, res, next)=>{
         { new: true }
       )
         .then((request) => {
+          console.log(request)
           res.json(request)})
         .catch((err) => console.log("err in updating Request", err));
   })

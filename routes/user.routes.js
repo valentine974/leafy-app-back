@@ -3,8 +3,6 @@ const router = express.Router();
 const User = require("../models/User.model")
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const jwt = require("jsonwebtoken");
-const fileUploader = require("../config/cloudinary.config");
 
 router.get("/users", (req,res,next)=>{
     User.find()
@@ -19,9 +17,6 @@ router.get("/user/:id", (req,res,next)=>{
   .catch(err=>console.log("err in retrieving the user", err))
 })
 
-
-
-
 //update user profile info
 router.put("/user/:id/settings", (req, res, next)=>{
     const {email, name, surname, contractStartDate, position, companyId, validators, imageUrl} = req.body
@@ -29,7 +24,6 @@ router.put("/user/:id/settings", (req, res, next)=>{
     .then(user=>res.json(user))
     .catch(err=>console.log("err in updating user", err))
 })
-
 
 router.put("/user/:id/modify-password", (req,res,next)=>{
     const {password} = req.body
@@ -61,8 +55,6 @@ router.put("/user/:id/modify-password", (req,res,next)=>{
       .catch((err) => next(err)); // In this case, we send error handling to the error handling middleware.
   
 })
-
-
 
 router.delete("/user/:id", (req, res, next)=>{
     User.findByIdAndRemove(req.params.id)
