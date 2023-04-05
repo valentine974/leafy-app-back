@@ -24,13 +24,6 @@ router.get("/conversations", (req, res, next) => {
         .catch((err) => console.log("err in retrieving the Conversation", err));
 });
 
-// get all conversations of a user postman checked
-router.get("/user/:id/conversations", (req, res, next) => {  
-    Conversation.find({participants:{$in:[req.params.id]}})
-        .populate("participants messages")
-        .then((conversations) => res.json(conversations))
-        .catch((err) => console.log("err in retrieving the Conversation", err));
-});
 
 // get a conversation  postman checked
 router.get("/conversation/:id", (req, res, next) => {
@@ -40,8 +33,25 @@ router.get("/conversation/:id", (req, res, next) => {
         .catch((err) => console.log("err in retrieving the Conversation", err));
 });
 
+// delete a conversation postman checked 
+router.delete("/conversation/:id", (req, res, next) => {
+    Conversation.findByIdAndDelete(req.params.id)
+        .then((conversation) => res.json(conversation))
+        .catch((err) => console.log("err in deleting the Conversation", err));
+});
+
+// get all conversations of a user postman checked
+router.get("/user/:id/conversations", (req, res, next) => {  
+    Conversation.find({participants:{$in:[req.params.id]}})
+        .populate("participants messages")
+        .then((conversations) => res.json(conversations))
+        .catch((err) => console.log("err in retrieving the Conversation", err));
+});
+
+
+
 // add a message to a conversation  postman checked
-router.post("/conversation/:id/add-message", (req, res, next) => {
+router.post("/conversation/:id/send-message", (req, res, next) => {
     const { sender, content, attachment } = req.body;
     Message.create({
         sender,
@@ -59,15 +69,10 @@ router.post("/conversation/:id/add-message", (req, res, next) => {
     });
 });
 
-// delete a conversation postman checked 
-router.delete("/conversation/:id", (req, res, next) => {
-    Conversation.findByIdAndDelete(req.params.id)
-        .then((conversation) => res.json(conversation))
-        .catch((err) => console.log("err in deleting the Conversation", err));
-});
+
 
 // delete a message from a conversation postman checked
-router.delete("/conversation/:id/message/:messageId", (req, res, next) => {
+router.delete("/conversation/:id/delete-message/:messageId", (req, res, next) => {
     Message.findByIdAndDelete(req.params.messageId)
         .then((message) => { 
             console.log(message)
@@ -84,7 +89,7 @@ router.delete("/conversation/:id/message/:messageId", (req, res, next) => {
 });
 
 // add a participant to a conversation  postman checked
-router.post("/conversation/:id/participant", (req, res, next) => {
+router.post("/conversation/:id/add-participant", (req, res, next) => {
     const { participant } = req.body;
     Conversation.findByIdAndUpdate(
         req.params.id,
@@ -97,7 +102,7 @@ router.post("/conversation/:id/participant", (req, res, next) => {
 });
 
 // delete a participant from a conversation postman checked
-router.delete("/conversation/:id/participant/:participantId", (req, res, next) => {
+router.delete("/conversation/:id/remove-participant/:participantId", (req, res, next) => {
     Conversation.findByIdAndUpdate(
         req.params.id,
         { $pull: { participants: req.params.participantId } },
