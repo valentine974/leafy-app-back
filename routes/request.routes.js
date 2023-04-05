@@ -21,7 +21,6 @@ router.post("/user/create-request", (req, res, next) => {
 
   User.findById(requester)
     .populate("companyId")
-    .populate("requester")
     .then((foundUser) => {
       const { validators } = foundUser;
       console.log(validators)
