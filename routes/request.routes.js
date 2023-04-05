@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
 const mongoose = require("mongoose");
-
 const User = require("../models/User.model");
 const Request = require("../models/Request.model");
 
@@ -48,7 +46,6 @@ router.post("/user/create-request", (req, res, next) => {
     }) 
     .catch((err) => console.log("error in payload._id", err));
 });
-
 
 router.get("/requests", (req,res,next)=>{
     Request.find()
