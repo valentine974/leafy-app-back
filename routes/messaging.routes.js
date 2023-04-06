@@ -16,14 +16,6 @@ router.post("/create-conversation", (req, res, next) => {
         .catch((err) => console.log("err in creating the Conversation", err));
 });
 
-// get all conversations postman checked
-router.get("/conversations", (req, res, next) => {
-    Conversation.find()
-        .populate("participants messages")
-        .then((conversations) => res.json(conversations))
-        .catch((err) => console.log("err in retrieving the Conversation", err));
-});
-
 
 // get a conversation  postman checked
 router.get("/conversation/:id", (req, res, next) => {
@@ -78,6 +70,7 @@ router.delete("/conversation/:id/delete-message/:messageId", (req, res, next) =>
             console.log(message)
         })
         .catch((err) => console.log("err in deleting the Message", err));
+
     Conversation.findByIdAndUpdate(
         req.params.id,
         { $pull: { messages: req.params.messageId } },

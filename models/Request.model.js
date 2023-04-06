@@ -9,6 +9,9 @@ const requestSchema = new Schema(
     isFullDay: {
       type: Boolean,  
     },
+    duration: {
+      type: Number,
+    },
     startDate: {
       type: Date, 
       required:[true, "Start date is required."],
