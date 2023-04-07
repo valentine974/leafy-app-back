@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const sendEmail = require("../utils/sendEmail");
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
@@ -65,7 +66,7 @@ router.post("/create-user", (req, res, next) => { // ADD THE MIDDLE WARE and ver
 
       // Create a new object that doesn't expose the password
       const user = { email, name, _id, isNewEmployee, companyId, position, imageUrl,contractStartDate };
-
+      sendEmail(name, email, "Welcome to the LEAFY", "use the attached link to login your account.")
       // Send a json response containing the user object
       res.status(201).json({ user: user });
     })
