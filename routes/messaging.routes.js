@@ -20,7 +20,7 @@ router.post("/create-conversation", (req, res, next) => {
 // get a conversation  postman checked
 router.get("/conversation/:id", (req, res, next) => {
     Conversation.findById(req.params.id)
-        .populate("participants messages")
+        .populate("participants messages messages.sender")
         .then((conversation) => res.json(conversation))
         .catch((err) => console.log("err in retrieving the Conversation", err));
 });
@@ -35,7 +35,7 @@ router.delete("/conversation/:id", (req, res, next) => {
 // get all conversations of a user postman checked
 router.get("/user/:id/conversations", (req, res, next) => {  
     Conversation.find({participants:{$in:[req.params.id]}})
-        .populate("participants messages")
+        .populate("participants messages messages.sender")
         .then((conversations) => res.json(conversations))
         .catch((err) => console.log("err in retrieving the Conversation", err));
 });
