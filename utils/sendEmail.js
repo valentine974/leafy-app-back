@@ -95,7 +95,7 @@ align="center">
           <!-- Your logo is here -->
           <img
             style="width: 180px; max-width: 180px; height: 85px; max-height: 85px; text-align: center; color: #ffffff;"
-            alt="Logo" src="https://fullsphere.co.uk/misc/free-template/images/logo-white-background.jpg"
+            alt="Logo" src="https://res.cloudinary.com/dingakmfw/image/upload/v1681143178/leafy/h3ng2yw0rm7g6umkwzjm.png"
             align="center" width="180" height="85">
 
         </td>
@@ -236,6 +236,7 @@ align="center">
 
 </html>`
 
+const passwordResetHtml = ` <p>Hi ${name}, your password has been reset</p>`
 
 const approvalHtml = ` <p>Hi ${name}, your vacation is approved</p>`
 
