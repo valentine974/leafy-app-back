@@ -41,6 +41,7 @@ const userSchema = new Schema(
     position: {
       type: String,
       required: [true, "Position is required."],
+      enum: [ "admin", "manager", "employee", "hr"] , default: "employee",
     },
     isNewEmployee: {
       type: Boolean,
