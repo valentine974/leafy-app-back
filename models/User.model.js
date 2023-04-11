@@ -13,6 +13,7 @@ const userSchema = new Schema(
     },
     imageUrl: {
       type: String,
+      default: "https://i.pinimg.com/550x/cd/a8/ff/cda8ff1bcb7f335719b146d61f6f494a.jpg",
     },
     password: {
       type: String,
