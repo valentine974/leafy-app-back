@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model")
+const Request = require("../models/Request.model")
+const Conversation = require("../models/Conversation.model")
+const Message = require("../models/Message.model")
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const sendEmail = require("../utils/sendEmail");
@@ -51,7 +54,8 @@ router.put("/user/:id/modify-password", (req,res,next)=>{
     // Check the users collection if a user with the same email already exists
     User.findByIdAndUpdate(req.params.id, {password:hashedPassword,isNewEmployee:false}, {new:true})
       .then((updatedUser) => {
-        const {name, email} = updatedUser
+        const {name, email} = updatedUser 
+        
         sendEmail(name,email, "password reset", "your password has been reset with sucess", "passwordReset")
         res.json(updatedUser)
        })
@@ -61,7 +65,21 @@ router.put("/user/:id/modify-password", (req,res,next)=>{
 
 router.delete("/user/:id", (req, res, next)=>{
     User.findByIdAndRemove(req.params.id)
+    .then(()=>
+    { 
+    Request.deleteMany({requester: req.params.id})
+    .catch(err=>console.log("err in deleting requests", err))
+
+    /* delete all conversations that includes req.params.id in the participants property, participants is an array */
+    Conversation.deleteMany({participants: req.params.id})
+    .catch(err=>console.log("err in deleting conversations", err))
+    
+    /* delete all messages that has req.params.id as sender */
+    Message.deleteMany({sender: req.params.id})
     .then(()=>res.json("user deleted"))
+    .catch(err=>console.log("err in deleting messages", err))
+    })
+
     .catch(err=>console.log("err in deleting user", err))
 })
 

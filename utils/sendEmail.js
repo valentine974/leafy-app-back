@@ -148,7 +148,7 @@ function sendEmail(name, email, subject, message, emailTemplate) {
               The <b>LEAFY</b> Team
             </p>
             <!-- Start button (You can change the background colour by the hex code below) -->
-            <a href="#" target="_blank"
+            <a href="https://celadon-nougat-dbf23b.netlify.app" target="_blank"
               style="background-color: #000000; font-size: 15px; line-height: 22px; font-family: 'Helvetica', Arial, sans-serif; font-weight: normal; text-decoration: none; padding: 12px 15px; color: #ffffff; border-radius: 5px; display: inline-block; mso-padding-alt: 0;">
               <!--[if mso]>
                   <i style="letter-spacing: 25px; mso-font-width: -100%; mso-text-raise: 30pt;">&nbsp;</i>
@@ -486,9 +486,9 @@ align="center">
             The <b>LEAFY</b> Team
           </p>
 <!-- button link to the wesite (You can change the background colour by the hex code below) -->
-<a href="#" target="_blank"
+<a href="https://celadon-nougat-dbf23b.netlify.app" target="_blank"
 style="background-color: #000000; font-size: 15px; line-height: 22px; font-family: 'Helvetica', Arial, sans-serif; font-weight: normal; text-decoration: none; padding: 12px 15px; color: #ffffff; border-radius: 5px; display: inline-block; mso-padding-alt: 0;">
-<span style="mso-text-raise: 15pt; color: #ffffff;">SEE YOUR REQUESTS</span>
+<span style="mso-text-raise: 15pt; color: #ffffff;">LOG IN TO SEE YOUR REQUESTS</span>
 </a>
 <!-- End button here -->
         </td>
@@ -652,9 +652,9 @@ align="center">
             The <b>LEAFY</b> Team
           </p>
 <!-- button link to the wesite (You can change the background colour by the hex code below) -->
-<a href="#" target="_blank"
+<a href="https://celadon-nougat-dbf23b.netlify.app" target="_blank"
 style="background-color: #000000; font-size: 15px; line-height: 22px; font-family: 'Helvetica', Arial, sans-serif; font-weight: normal; text-decoration: none; padding: 12px 15px; color: #ffffff; border-radius: 5px; display: inline-block; mso-padding-alt: 0;">
-<span style="mso-text-raise: 15pt; color: #ffffff;">LOG IN</span>
+<span style="mso-text-raise: 15pt; color: #ffffff;">LOG IN TO REVIEW YOUR REQUESTS</span>
 </a>
 <!-- End button here -->
         </td>
@@ -718,13 +718,14 @@ style="background-color: #000000; font-size: 15px; line-height: 22px; font-famil
       break;
     case "passwordReset":
       emailHtml = passwordResetHtml;
+      break;
     default:
       emailHtml = ` <p>Hi ${name}, ${message}</p>`;
   }
 
   transporter
     .sendMail({
-      from: "LEAFY registration <lishengwei@outlook.fr>",
+      from: "LEAFY<lishengwei@outlook.fr>",
       to: email,
       subject: subject,
       text: message,
