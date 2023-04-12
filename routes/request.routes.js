@@ -108,13 +108,19 @@ router.put("/request/:id/settings", (req, res, next)=>{
       )
         .then((request) => {
           // requester is not populated here, so we can't retrive email addresse here.
-          // const {name, email,status} = request.requester
-          // if(status === "approved") sendEmail(name,email, "request approved", "your request for vacation has been proved", "approval")
-          // if(status === "rejected") sendEmail(name,email, "request denied", "your request for vacation has been denied", "rejection")
-          // console.log(request)
-          res.json(request)})
-        .catch((err) => console.log("err in updating Request", err));
-  })
+          console.log("updated request",request)
+          Request.findById(request._id)
+          .populate("requester validations.validatorId")
+          .then((request)=>{
+            const {status} = request
+            const {name, email} = request.requester
+            console.log("name", name, "email", email, "status", status)
+          if(status === "approved") sendEmail(name,email, "request approved", "your request for vacation has been proved", "approval")
+          if(status === "rejected") sendEmail(name,email, "request denied", "your request for vacation has been denied", "rejection")
+          })
+          .then(()=>res.json(request))
+        .catch((err) => console.log("err in updating Request", err))}
+      )})
   
   router.delete("/request/:id", (req, res, next)=>{
       Request.findByIdAndRemove(req.params.id)
