@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const User = require("../models/User.model");
 const Request = require("../models/Request.model");
 const differenceInBusinessDays = require('date-fns/differenceInBusinessDays')
+const sendEmail = require("../utils/sendEmail");
 
 router.post("/user/create-request", (req, res, next) => {
   const {
@@ -84,7 +85,9 @@ router.put("/request/:id/settings", (req, res, next)=>{
       let status = "pending"
 /*       console.log("validations:",validations) */
       /* status is now treated on the fron end */
-      if(validations && validations.every((validation) => validation.status === "approved")) status = "approved"
+      if(validations && validations.every((validation) => validation.status === "approved")) {
+        status = "approved"
+      }
       if(validations && validations.some((validation) => validation.status === "rejected")) status = "rejected"
 
       /* console.log("isFullDay", isFullDay, "startDate", startDate, "morningAfternoonStart", morningAfternoonStart, "endDate", endDate, "morningAfternoonEnd", morningAfternoonEnd, "comments", comments, "validations", validations, "status", status)
@@ -104,7 +107,11 @@ router.put("/request/:id/settings", (req, res, next)=>{
         { new: true }
       )
         .then((request) => {
-          console.log(request)
+          // requester is not populated here, so we can't retrive email addresse here.
+          // const {name, email,status} = request.requester
+          // if(status === "approved") sendEmail(name,email, "request approved", "your request for vacation has been proved", "approval")
+          // if(status === "rejected") sendEmail(name,email, "request denied", "your request for vacation has been denied", "rejection")
+          // console.log(request)
           res.json(request)})
         .catch((err) => console.log("err in updating Request", err));
   })

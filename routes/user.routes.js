@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/User.model")
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const sendEmail = require("../utils/sendEmail");
 
 router.get("/users", (req,res,next)=>{
     User.find()
@@ -50,6 +51,8 @@ router.put("/user/:id/modify-password", (req,res,next)=>{
     // Check the users collection if a user with the same email already exists
     User.findByIdAndUpdate(req.params.id, {password:hashedPassword,isNewEmployee:false}, {new:true})
       .then((updatedUser) => {
+        const {name, email} = updatedUser
+        sendEmail(name,email, "password reset", "your password has been reset with sucess", "passwordReset")
         res.json(updatedUser)
        })
       .catch((err) => next(err)); // In this case, we send error handling to the error handling middleware.
