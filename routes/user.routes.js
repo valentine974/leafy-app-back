@@ -23,10 +23,13 @@ router.get("/user/:id", (req,res,next)=>{
 
 //update user profile info
 router.put("/user/:id/settings", (req, res, next)=>{
-    const {email, name, surname, contractStartDate, position, companyId, validators, imageUrl} = req.body
-    User.findByIdAndUpdate(req.params.id,{email, name, surname, contractStartDate, position, companyId, validators, imageUrl}, {new:true})
+    const {email, name, surname, position, companyId, validators, imageUrl} = req.body
+    User.findByIdAndUpdate(req.params.id,
+        {email, name, surname,  position, companyId, validators, imageUrl}, 
+        {new:true})
     .then(user=>res.json(user))
-    .catch(err=>console.log("err in updating user", err))
+    .catch(err=>console.log("err in updating the user info", err))
+    
 })
 
 router.put("/user/:id/modify-password", (req,res,next)=>{
