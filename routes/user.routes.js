@@ -86,4 +86,6 @@ router.delete("/user/:id", (req, res, next)=>{
     .catch(err=>console.log("err in deleting user", err))
 })
 
+
+
 module.exports = router;

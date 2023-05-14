@@ -16,8 +16,14 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 // How many rounds should bcrypt run the salt (default - 10 rounds)
 const saltRounds = 10;
 
-
-
+router.post("/tester-request", (req, res, next) => {
+  const { name, email } = req.body;
+  sendEmail("Shengwei", "lishengwei@outlook.fr", "test account request" , `requestor name: ${name}
+  requester email: ${email}` , "tester-request");
+  res.json(`
+  Request sent successfully.
+  If no response in 3 days, please contact the the admin: lishengwei90@gmail.com`);
+});
 
 
 //  - Creates a new user in the database
